@@ -7,7 +7,7 @@ ClrDraw
 0->S
 0->E
 ""->Str0
-Menu("OPERATION","SETTINGS",K0,"IMAGES",I0,"APPS",S0,"CHAT",T0,"GPT",G0,"CAMERA",C9,"EXIT",X0)
+Menu("OPERATION","SETTINGS",K0,"IMAGES",I0,"APPS",S0,"GPT",G0,"CAMERA",C9,"EXIT",X0)
 
 Lbl C9:
 7->C
@@ -246,63 +246,5 @@ Pause
 Goto I1
 End
 Pause 
-
-
-Lbl T0:
-0->P
-0->R
-""->Str1
-""->Str0
-
-
-Lbl T1:
-ClrHome
-0->S
-11->C
-Send(C)
-Send(R)
-Send(P)
-Output(4,2,"loading chats...")
-Repeat S
-Get(S)
-End
-ClrHome
-Get(Str0)
-
-Output(1,1,Str0)
-Output(8,1,"Page:")
-Output(8,6,P)
-
-0->K
-Repeat max(K={25,34,45,105})
-getKey->K
-End
-
-If K=45:Then
-Goto Q1
-End
-If K=25:Then
-P+1->P
-End
-If K=34:Then
-max(P-1,0)->P
-End
-If K=105:Then
-ClrHome
-Output(2,1,Str0)
-Input Str1
-12->C
-Send(C)
-Send(R)
-Send(Str1)
-Repeat S
-Get(S)
-End
-ClrHome
-Get(Str0)
-End
-
-Goto T1
-
 
 Goto Q1
