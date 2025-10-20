@@ -74,8 +74,6 @@ void snap();
 void solve();
 void image_list();
 void fetch_image();
-void fetch_chats();
-void send_chat();
 void program_list();
 void fetch_program();
 void sendPage();
@@ -101,8 +99,6 @@ struct Command commands[] = {
     {8, "solve", 1, solve, true},
     {9, "image_list", 1, image_list, true},
     {10, "fetch_image", 1, fetch_image, true},
-    {11, "fetch_chats", 2, fetch_chats, true},
-    {12, "send_chat", 2, send_chat, true},
     {13, "program_list", 1, program_list, true},
     {14, "fetch_program", 1, fetch_program, true},
     { 15, "sendPage", 1, sendPage, true },
@@ -739,51 +735,6 @@ void fetch_image()
   frame[0] = realsize & 0xff;
   frame[1] = (realsize >> 8) & 0xff;
   memcpy(&frame[2], response, 756);
-
-  setSuccess(response);
-}
-
-void fetch_chats()
-{
-  int room = realArgs[0];
-  int page = realArgs[1];
-  auto url = String(SERVER) + String("/chats/messages?p=") + urlEncode(String(page)) + String("&c=") + urlEncode(String(room));
-
-  size_t realsize = 0;
-  if (makeRequest(url, response, MAXSTRARGLEN, &realsize))
-  {
-    setError("error making request");
-    return;
-  }
-
-  Serial.print("response: ");
-  Serial.println(response);
-
-  setSuccess(response);
-}
-
-void send_chat()
-{
-  int room = realArgs[0];
-  const char *msg = strArgs[1];
-
-  auto url = String(SERVER) +
-             String("/chats/send?c=") +
-             urlEncode(String(room)) +
-             String("&m=") +
-             urlEncode(String(msg)) +
-             String("&id=") +
-             urlEncode(String(CHAT_NAME));
-
-  size_t realsize = 0;
-  if (makeRequest(url, response, MAXSTRARGLEN, &realsize))
-  {
-    setError("error making request");
-    return;
-  }
-
-  Serial.print("response: ");
-  Serial.println(response);
 
   setSuccess(response);
 }
